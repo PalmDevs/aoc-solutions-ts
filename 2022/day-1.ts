@@ -11,6 +11,7 @@ export function getEachCaloriesAmount(input: string): number[] {
         .sort((a, b) => b - a)
 }
 
+
 /*
     Example input:
 
@@ -29,7 +30,6 @@ export function getEachCaloriesAmount(input: string): number[] {
 
 // answers[0] for first part
 // answers[1] for second part
-
 export function getAnswer(input: string) {
     const calories = getEachCaloriesAmount(input)
 
