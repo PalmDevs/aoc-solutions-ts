@@ -1,7 +1,5 @@
-import fs from 'node:fs'
-
 // Converts input to number[] (array of each elf's calories)
-export function getEachElfsCalories(input: string): number[] {
+export function getEachCaloriesAmount(input: string): number[] {
     return input
         .split('\n\n')
         .map(calories => calories.split('\n'))
@@ -13,15 +11,32 @@ export function getEachElfsCalories(input: string): number[] {
         .sort((a, b) => b - a)
 }
 
-const calories = getEachElfsCalories(
-    fs.readFileSync('input-day-1.txt').toString()
-)
+/*
+    Example input:
+
+    1234
+    5678
+    9012
+
+    3456
+    7890
+
+    6969
+    1645
+    9583
+    5938
+*/
 
 // answers[0] for first part
 // answers[1] for second part
-export const answers: [number, number] = [
-    calories[0],
-    [0, 1, 2]
-        .map(index => calories[index])
-        .reduce((prev, acc) => prev + acc)
-]
+
+export function getAnswer(input: string) {
+    const calories = getEachCaloriesAmount(input)
+
+    return [
+        calories[0],
+        [0, 1, 2]
+            .map(index => calories[index])
+            .reduce((prev, acc) => prev + acc)
+    ]
+}
