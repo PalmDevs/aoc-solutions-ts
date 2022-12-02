@@ -28,41 +28,8 @@ export function splitInput(input: string) {
         .map(line => line.split(' ')) as DayTwoInput
 }
 
-// Determines the result points of the choices when played
-export function determineResultPoints(
-    elfChoice: DayTwoInput[number][0],
-    ourChoice: DayTwoInput[number][1]
-) {
-    const elfChoiceIndex = PossibleElfChoices.findIndex(
-        choice => choice === elfChoice
-    )
-    const choiceIndex = PossibleChoices.findIndex(
-        choice => choice === ourChoice
-    )
-
-    if (elfChoiceIndex === choiceIndex) return ResultPoints.Draw
-
-    // Choices are ordered by Rock, Paper, and Scissors
-    // Winning choices will always have another losing choice in between each other
-    // Therefore, (indexof(elfChoice) + 1) % 3 will always be the winning choice
-    if (((elfChoiceIndex + 1) % 3) === choiceIndex) return ResultPoints.Win
-
-    return ResultPoints.Lose
-}
-
-
-// Get part one answer
-export function getPartOnePoints(input: DayTwoInput) {
-    return input
-        .map(
-            ([ elfChoice, ourChoice ]) =>
-            ShapePoints[ourChoice] + determineResultPoints(elfChoice, ourChoice)
-        )
-        .reduce((acc, cur) => acc + cur)
-}
-
-// Get part two answer
-export function getPartTwoPoints(input: DayTwoInput) {
+// Get answer
+export function getPoints(input: DayTwoInput) {
     return input
         .map(
             ([ elfChoice, condition ]) => {
@@ -102,13 +69,6 @@ export function getPartTwoPoints(input: DayTwoInput) {
     C Z
 */
 
-// answers[0] for first part
-// answers[1] for second part
 export function getAnswer(input: string) {
-    const arrayInput = splitInput(input)
-
-    return [
-        getPartOnePoints(arrayInput),
-        getPartTwoPoints(arrayInput)
-    ]
+    return getPoints(splitInput(input)
 }

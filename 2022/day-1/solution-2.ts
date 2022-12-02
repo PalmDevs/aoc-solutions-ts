@@ -28,15 +28,10 @@ export function getEachCaloriesAmount(input: string): number[] {
     5938
 */
 
-// answers[0] for first part
-// answers[1] for second part
 export function getAnswer(input: string) {
     const calories = getEachCaloriesAmount(input)
 
-    return [
-        calories[0],
-        [0, 1, 2]
-            .map(index => calories[index])
-            .reduce((prev, acc) => prev + acc)
-    ]
+    return [0, 1, 2]
+        .map(index => calories[index])
+        .reduce((prev, acc) => prev + acc)
 }
