@@ -4,7 +4,7 @@ export function getEachCaloriesAmount(input: string): number[] {
         .split('\n\n')
         .map(calories => calories.split('\n'))
         .map(array => array.reduce<number>(
-                (prev, acc) => Number(prev) + Number(acc),
+                (acc, cur) => Number(acc) + Number(cur),
                 0
             )
         )
@@ -13,7 +13,7 @@ export function getEachCaloriesAmount(input: string): number[] {
 
 
 /*
-    Example input:
+    Example input (numbers line by line, add an empty line to insert a new calorie count):
 
     1234
     5678
