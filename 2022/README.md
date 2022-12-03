@@ -7,7 +7,10 @@ Import the `getAnswer` function and pass the input (as a string) to it to get th
 AOC gives you 2 puzzles for each day, so there will be 2 solutions.  
 *There's an example for each input as well, in case you want to test or just want to take a peek.*
 ```ts
-import { getAnswer } from './day-x/solution-y.ts'
+// WARNING: If you're using the "Node" moduleResolution
+// You'll have to add the .js extension at the end
+// import { getAnswer } from './day-x/solution-y.js'
+import { getAnswer } from './day-x/solution-y'
 
 console.log(getAnswer('input here'))
 ```
