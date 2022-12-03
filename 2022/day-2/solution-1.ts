@@ -1,5 +1,14 @@
-export const PossibleElfChoices = ['A', 'B', 'C'] as const
-export const PossibleChoices = ['X', 'Y', 'Z'] as const
+export enum PossibleElfChoices {
+    A,
+    B,
+    C
+}
+
+export enum PossibleChoices {
+    X,
+    Y,
+    Z
+}
 
 // Points for each shapes played
 export const ShapePoints = {
@@ -16,8 +25,8 @@ export const ResultPoints = {
 } as const
 
 export type DayTwoInput = Array<[
-    (typeof PossibleElfChoices)[number],
-    (typeof PossibleChoices)[number]
+    keyof typeof PossibleElfChoices,
+    keyof typeof PossibleChoices
 ]>
 
 
@@ -33,12 +42,8 @@ export function determineResultPoints(
     elfChoice: DayTwoInput[number][0],
     ourChoice: DayTwoInput[number][1]
 ) {
-    const elfChoiceIndex = PossibleElfChoices.findIndex(
-        choice => choice === elfChoice
-    )
-    const choiceIndex = PossibleChoices.findIndex(
-        choice => choice === ourChoice
-    )
+    const elfChoiceIndex: 0 | 1 | 2 = PossibleElfChoices[elfChoice]
+    const choiceIndex: 0 | 1 | 2 = PossibleChoices[ourChoice]
 
     if (elfChoiceIndex === choiceIndex) return ResultPoints.Draw
 
@@ -63,7 +68,7 @@ export function getPoints(input: DayTwoInput) {
 
 
 /* 
-    Example input:
+    Example input (A = X = Rock, B = Y = Paper, C = Z = Scissors):
 
     A X
     A Y
