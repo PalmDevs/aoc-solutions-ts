@@ -10,13 +10,6 @@ export enum PossibleChoices {
     Z
 }
 
-// Points for each shapes played
-export const ShapePoints = {
-    X: 1,
-    Y: 2,
-    Z: 3
-} as const
-
 // Points for each round results
 export const ResultPoints = {
     Win: 6,
@@ -61,7 +54,7 @@ export function getPoints(input: DayTwoInput) {
     return input
         .map(
             ([ elfChoice, ourChoice ]) =>
-            ShapePoints[ourChoice] + determineResultPoints(elfChoice, ourChoice)
+            (PossibleChoices[ourChoice] + 1) + determineResultPoints(elfChoice, ourChoice)
         )
         .reduce((acc, cur) => acc + cur)
 }
