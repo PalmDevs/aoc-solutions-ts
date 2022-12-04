@@ -60,20 +60,6 @@ export function getPoints(input: DayTwoInput) {
 }
 
 
-/* 
-    Example input (A = X = Rock, B = Y = Paper, C = Z = Scissors):
-
-    A X
-    A Y
-    A Z
-    B X
-    B Y
-    B Z
-    C X
-    C Y
-    C Z
-*/
-
 export function getAnswer(input: string) {
     return getPoints(splitInput(input))
 }

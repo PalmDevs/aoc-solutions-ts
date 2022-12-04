@@ -14,7 +14,7 @@ I also use GNU nano for editing the code!
 ## ❔ How to use
 Import the `getAnswer` function and pass the input (as a string) to it to get the solution for each puzzle.  
 AOC gives you 2 puzzles for each day, so there will be 2 solutions.  
-*There's an example for each input as well, in case you want to test or just want to take a peek.*
+*I do not provide exmaples for inputs, please check test/example inputs from the official puzzle instead.*
 ```ts
 // WARNING: If you're using the "Node" moduleResolution
 // You'll have to add the .js extension at the end

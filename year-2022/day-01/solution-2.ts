@@ -12,22 +12,6 @@ export function getEachCaloriesAmount(input: string): number[] {
 }
 
 
-/*
-    Example input (numbers line by line, add an empty line to insert a new calorie count):
-
-    1234
-    5678
-    9012
-
-    3456
-    7890
-
-    6969
-    1645
-    9583
-    5938
-*/
-
 export function getAnswer(input: string) {
     const calories = getEachCaloriesAmount(input)
 
