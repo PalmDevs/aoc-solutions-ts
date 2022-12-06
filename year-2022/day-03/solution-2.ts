@@ -1,6 +1,7 @@
 // Splits input to Array<[ string, string, string ]>
 export function splitInput(input: string): [string, string, string][] {
     return input
+        .trim()
         .match(/(?:.+\n?){3}/g)!
         .map(chunk => chunk
             .trim()

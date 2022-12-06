@@ -25,6 +25,7 @@ export type DayTwoInput = Array<[
 // Splits input to Array<[ elfChoice, choice ]> as DayTwoInput
 export function splitInput(input: string) {
     return input
+        .trim()
         .split('\n')
         .map(line => line.split(' ')) as DayTwoInput
 }

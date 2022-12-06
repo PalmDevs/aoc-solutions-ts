@@ -1,6 +1,7 @@
 // Converts input to number[] (array of each elf's calories)
 export function getEachCaloriesAmount(input: string): number[] {
     return input
+        .trim()
         .split('\n\n')
         .map(calories => calories.split('\n'))
         .map(array => array.reduce<number>(

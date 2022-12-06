@@ -1,6 +1,7 @@
 // Splits input to Array<[ firstHalf as string, secondHalf as string ]>
 export function splitInput(input: string): [string, string][] {
     return input
+        .trim()
         .split('\n')
         .map(line => {
             const { length } = line, halfLength = length / 2
