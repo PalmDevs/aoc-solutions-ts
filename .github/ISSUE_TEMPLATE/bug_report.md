@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help me fix issues
+about: Create a report
 title: 'bug: Bug report'
 labels: bug
 assignees: PalmDevs
@@ -21,11 +21,12 @@ Steps to reproduce the behavior:
 Describe a clear and concise description of what you expected to happen.
 
 ## Environment
- - Node version: [eg. 18.12.1]
- - TypeScript version [e.g. 4.9.3]
+ - Runtime: [eg. Node, Deno, Bun]
+ - Runtime version: [eg. 18.12.1, 1.0.4]
+ - TypeScript version [e.g. 4.9.3, 5.0.2]
 
 ### Input
-Upload your input file here, so I can debug.
+Upload your input file here.
 
 **Additional context**
-Add any other context about the problem here.
+Add any additional context about the issue here.
