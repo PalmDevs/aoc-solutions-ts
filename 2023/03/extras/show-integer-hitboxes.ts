@@ -28,11 +28,11 @@ function getIntegerHitboxRangesPerLine(lines: string[]) {
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i]
-        const isNotLastIteration = i !== (lines.length - 1)
+        const isNotLastIteration = i !== lines.length - 1
 
         // Set stuff
         if (i === 0) ranges[i] = []
-        if (isNotLastIteration) ranges[i+1] = []
+        if (isNotLastIteration) ranges[i + 1] = []
 
         let prevMatchWasInt = false
         let firstIntIndexInGroup = -1
@@ -49,10 +49,7 @@ function getIntegerHitboxRangesPerLine(lines: string[]) {
 
                 const bindedClamp = (v: number) => clamp(0, v, line.length - 1)
 
-                const data = [
-                    bindedClamp(firstIntIndexInGroup - 1),
-                    bindedClamp(j),
-                ] as [number, number]
+                const data = [bindedClamp(firstIntIndexInGroup - 1), bindedClamp(j)] as [number, number]
 
                 ranges[i].push(data)
                 if (i > 0) ranges[i - 1].push(data)
