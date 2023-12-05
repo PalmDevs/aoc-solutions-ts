@@ -1,77 +1,84 @@
-import { getInput } from "../../utils/input";
+import { getInput } from '../../utils/input'
 
 const input = await getInput()
 const lines = input.split('\n')
 const positionToFindSymbols = getIntegerHitboxRangesPerLine(lines)
-const toSum = []
-// positionToFindSymbols.map((v, i) => console.log(i, v.map(x => x.join('-')).join(', ')))
 
-// TODO: fix duplicates
+let sum = 0
+const alreadyMatchedFirstIndexes: Array<number[]> = []
+
 for (let i = 0; i < lines.length; i++) {
-  const line = lines[i]
-  const affectedColumnsRanges = positionToFindSymbols[i]
-  for (let j = 0; j < affectedColumnsRanges.length; j++) {
-    const [data, x, y] = affectedColumnsRanges[j]
-    for (let k = x; k <= y; k++) {
-      if (
-        !isIntegerChar(line[k]) && line[k] !== '.'
-      ) {
-        toSum.push(data.value)
-      }
+    const line = lines[i]
+    const affectedColumnsRanges = positionToFindSymbols[i]
+    alreadyMatchedFirstIndexes[i] = []
+    for (let j = 0; j < affectedColumnsRanges.length; j++) {
+        const [data, firstIndex, x1, x2] = affectedColumnsRanges[j]
+        for (let k = x1; k <= x2; k++) {
+            if (!isIntegerChar(line[k]) && line[k] !== '.' && !alreadyMatchedFirstIndexes[i].includes(firstIndex)) {
+                alreadyMatchedFirstIndexes[i].push(firstIndex)
+                sum += data
+            }
+        }
     }
-  }
 }
 
-const sum = toSum.reduce((pv, cv) => pv + cv, 0)
 console.log(sum)
 
 function getIntegerHitboxRangesPerLine(lines: string[]) {
-    const ranges: Array<Array<[{ value: number, index: [number, number] }, number, number]>> = []
+    // 2D array (array of lines) of [Value, FirstIndex, X1, X2]
+    const ranges: Array<Array<[number, number, number, number]>> = []
+
     for (let i = 0; i < lines.length; i++) {
-      const line = lines[i]
-      let prevWasInt = false
-      let firstIntIndexInGroup = -1
-      for (let j = 0; j < lines.length; j++) {
-        const charIsInt = isIntegerChar(line[j])
-        if (
-          charIsInt &&
-          !prevWasInt
-        ) {
-          prevWasInt = true
-          firstIntIndexInGroup = j
-        } else if (prevWasInt && !charIsInt) {
-          prevWasInt = false
+        const line = lines[i]
+        const isNotLastIteration = i !== (lines.length - 1)
 
-          ranges[i-1] ??= []
-          ranges[i] ??= []
-          ranges[i+1] ??= []
+        // Set stuff
+        if (i === 0) ranges[i] = []
+        if (isNotLastIteration) ranges[i+1] = []
 
-          const bindedClamp = (v: number) => clamp(0, v, line.length - 1)
+        let prevMatchWasInt = false
+        let firstIntIndexInGroup = -1
 
-          const columnRanges = [
-            {
-              value: Number(line.slice(firstIntIndexInGroup, j)),
-              index: [firstIntIndexInGroup-1, j-1]
-            },
-            bindedClamp(firstIntIndexInGroup-1), 
-            bindedClamp(j+1)
-          ] as typeof ranges[number][number]
+        for (let j = 0; j < lines.length; j++) {
+            const charIsInt = isIntegerChar(line[j])
 
-          if (i > 0) ranges[i-1]!.push(columnRanges)
-          if ((i + 1) < lines.length) ranges[i+1]!.push(columnRanges)
-          ranges[i]!.push(columnRanges)
+            // This means we're in the same number group, so we can just ignore
+            if (prevMatchWasInt) {
+                if (charIsInt) continue
+                
+                // If the character isn't an integer, previous found numbers can just be grouped
+                prevMatchWasInt = false
+
+                const bindedClamp = (v: number) => clamp(0, v, line.length - 1)
+
+                const data = [
+                    Number(line.slice(firstIntIndexInGroup, j)),
+                    firstIntIndexInGroup,
+                    bindedClamp(firstIntIndexInGroup - 1),
+                    bindedClamp(j + 1),
+                ] as [number, number, number, number]
+
+                ranges[i].push(data)
+                if (i > 0) ranges[i - 1].push(data)
+                if (isNotLastIteration) ranges[i + 1].push(data)
+            }
+
+            // We know for sure prevMatchWasInt is false
+            if (charIsInt) {
+                prevMatchWasInt = true
+                firstIntIndexInGroup = j
+            }
         }
-      }
     }
-    
+
     return ranges
 }
 
 function isIntegerChar(c: string) {
-  const cc = c.charCodeAt(0)
-  return cc >= 48 && cc <= 57
+    const cc = c.charCodeAt(0)
+    return cc >= 48 && cc <= 57
 }
 
 function clamp(min: number, value: number, max: number) {
-  return Math.max(Math.min(value, max), min)
+    return Math.max(Math.min(value, max), min)
 }
