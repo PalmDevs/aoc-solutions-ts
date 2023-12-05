@@ -8,7 +8,8 @@ _"The year is 2023, Palm is solving Advent of Code questions..."_
 📂 2023
 |
 |_ 📂 dd  # The day number
-| |_ 📂 s  # Part number (usually just 1 or 2)
+| |_ 🤩 extras  # Cool scripts
+| |_ 📂 s       # Part number (usually just 1 or 2)
 |   |_ 📄 input.test.txt   # Test input (usually the one that Advent of Code gives)
 |   |_ 📄 answer.test.txt  # Test output (same as above)
 |   |_ 📘 constants.ts     # Shared components
