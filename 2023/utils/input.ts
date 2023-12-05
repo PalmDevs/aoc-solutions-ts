@@ -4,6 +4,9 @@ import { readFile } from 'fs/promises'
 import { streamToString } from './stream'
 
 export async function getRawInput(attemptToLookInParentDir = false) {
+    const arg = process.argv[2]
+    if (arg && existsSync(arg)) return await readFile(arg, 'utf-8')
+
     if (existsSync('./input.txt')) return await readFile('./input.txt', 'utf-8')
     if (attemptToLookInParentDir && existsSync('../input.txt')) return await readFile('../input.txt', 'utf-8')
 
