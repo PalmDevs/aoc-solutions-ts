@@ -2,7 +2,7 @@ import { getInput } from '../../utils/input'
 
 const input = await getInput(true)
 const lines = input.split('\n')
-const positionToFindSymbols = getIntegerHitboxRangesPerLine(lines)
+const positionToFindSymbols = getIntegerHitboxRanges(lines)
 
 let sum = 0
 const indexesInitedForAlreadyMatchedFIs = new Set<number>()
@@ -18,9 +18,13 @@ for (let i = 0; i < lines.length; i++) {
             alreadyMatchedFirstIndexes[lineIndex] = []
             indexesInitedForAlreadyMatchedFIs.add(lineIndex)
         }
-        
+
         for (let k = x1; k <= x2; k++) {
-            if (!isIntegerChar(line[k]) && line[k] !== '.' && !alreadyMatchedFirstIndexes[lineIndex].includes(firstIndex)) {
+            if (
+                !isIntegerChar(line[k]) &&
+                line[k] !== '.' &&
+                !alreadyMatchedFirstIndexes[lineIndex].includes(firstIndex)
+            ) {
                 alreadyMatchedFirstIndexes[lineIndex].push(firstIndex)
                 sum += data
             }
@@ -30,17 +34,17 @@ for (let i = 0; i < lines.length; i++) {
 
 console.log(sum)
 
-function getIntegerHitboxRangesPerLine(lines: string[]) {
+function getIntegerHitboxRanges(lines: string[]) {
     // 2D array (array of lines) of [Value, LineIndex, FirstIndex, X1, X2]
     const ranges: Array<Array<[number, number, number, number, number]>> = []
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i]
-        const isNotLastIteration = i !== (lines.length - 1)
+        const isNotLastIteration = i !== lines.length - 1
 
         // Set stuff
         if (i === 0) ranges[i] = []
-        if (isNotLastIteration) ranges[i+1] = []
+        if (isNotLastIteration) ranges[i + 1] = []
 
         let prevMatchWasInt = false
         let firstIntIndexInGroup = -1
@@ -51,7 +55,7 @@ function getIntegerHitboxRangesPerLine(lines: string[]) {
             // This means we're in the same number group, so we can just ignore
             if (prevMatchWasInt) {
                 if (charIsInt) continue
-                
+
                 // If the character isn't an integer, previous found numbers can just be grouped
                 prevMatchWasInt = false
 
