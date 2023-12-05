@@ -1,6 +1,6 @@
 import { getInput } from '../../utils/input'
 
-const input = await getInput()
+const input = await getInput(true)
 const lines = input.split('\n').map(x => x.split(''))
 const positionToFindSymbols = getIntegerHitboxRangesPerLine(input.split('\n'))
 
@@ -11,11 +11,10 @@ for (let i = 0; i < lines.length; i++) {
         const [x1, x2] = affectedColumnsRanges[j]
         for (let k = x1; k <= x2; k++) {
             if (!isIntegerChar(line[k])) {
-                if (line[k] === '.') {
+                if (line[k] === '.' || line[k] === '░') {
                     if (lines[i][k] === '░') lines[i][k] = '▒'
                     if (lines[i][k] !== '▒') lines[i][k] = '░'
-                }
-                else lines[i][k] = '█'
+                } else if (!['░', '▒', '.'].includes(line[k])) lines[i][k] = '█'
             }
         }
     }
@@ -38,13 +37,13 @@ function getIntegerHitboxRangesPerLine(lines: string[]) {
         let prevMatchWasInt = false
         let firstIntIndexInGroup = -1
 
-        for (let j = 0; j < lines.length; j++) {
-            const charIsInt = isIntegerChar(line[j])
+        for (let j = 0; j <= line.length; j++) {
+            const charIsInt = isIntegerChar(line[j] ?? '.')
 
             // This means we're in the same number group, so we can just ignore
             if (prevMatchWasInt) {
                 if (charIsInt) continue
-                
+
                 // If the character isn't an integer, previous found numbers can just be grouped
                 prevMatchWasInt = false
 
@@ -52,7 +51,7 @@ function getIntegerHitboxRangesPerLine(lines: string[]) {
 
                 const data = [
                     bindedClamp(firstIntIndexInGroup - 1),
-                    bindedClamp(j + 1),
+                    bindedClamp(j),
                 ] as [number, number]
 
                 ranges[i].push(data)
