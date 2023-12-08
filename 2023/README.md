@@ -6,18 +6,16 @@ _"The year is 2023, Palm is solving Advent of Code questions..."_
 
 ```sh
 📂 2023
-|
-|_ 📂 dd  # The day number
-| |_ 🤩 extras  # Cool scripts
-| |_ 📂 s       # Part number (usually just 1 or 2)
-|   |_ 📄 input.test.txt   # Test input (usually the one that Advent of Code gives)
-|   |_ 📄 answer.test.txt  # Test output (same as above)
-|   |_ 📘 constants.ts     # Shared components
-|   |_ 📘 index.ts         # The solution
-|
-|_ 📁 utils  # Utility functions
-|
-|_ ❔ (other files...)  # Ignore them
+┣╸ 📂 (dd)  # The day number
+┃  ┣╸ 🤩 extras     # Cool scripts
+┃  ┣╸ 📂 (sN)       # Part number (usually just 1 or 2)
+┃  ┃  ┣╸ 📄 input.test.txt   # Test input
+┃  ┃  ┣╸ 📄 answer.test.txt  # Test output
+┃  ┃  ┣╸ 📘 index.ts         # The solution
+┃  ┃  ┗╸ 📘 constants.ts     # Constants
+┃  ┗╸ 📘 shared.ts  # Shared components between solutions
+┣╸ 📁 utils  # Utility functions
+┗╸ ❔ (...)  # They're probably not important, ignore them
 ```
 
 File like `constants.ts`, `input.answer.txt`, or `answer.test.txt` may appear occasionally above the `s` (part number) directories.  
@@ -35,7 +33,10 @@ cd 01/1
 echo "some input" > input.txt
 
 # Execute
-bun run .
+bun run . ./input.txt
+#         ^^^^^^^^^^^
+# This argument is optional. If a file named `input.txt` exists, the solution will read it automatically.
+# Unless you specify the path to another *existing* file. It'll try to read from `input.txt` then stdin.
 ```
 
 **Input using stdin**
@@ -46,8 +47,11 @@ cd 01/1
 
 # Echo the input into the process
 echo "some input" | bun run .
+
 # You can even read from any file, if you want to
 cat input.custom.txt | bun run .
+# But the recommended way is to pass the file path as an argument likewise:
+# bun run . ./input.custom.txt
 ```
 
 If you're using the provided test inputs, their expected answers are also provided the `answer.test.txt` file.
